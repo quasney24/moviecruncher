@@ -1,0 +1,5 @@
+upcoming movies - https://api.themoviedb.org/3/movie/upcoming?api_key=84ef22f5d85f87fb669625c2771b6737&language=en-US
+
+now playing - https://api.themoviedb.org/3/movie/now_playing?api_key=84ef22f5d85f87fb669625c2771b6737&language=en-US
+
+filter - Genre/popularity - how is this calulated?
