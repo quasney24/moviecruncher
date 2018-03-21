@@ -4,19 +4,21 @@ d3.select(window).on("load", function(event){
     d3.event.preventDefault();
     var key = "84ef22f5d85f87fb669625c2771b6737"
     var queryURL = "https://api.themoviedb.org/3/movie/now_playing?api_key=84ef22f5d85f87fb669625c2771b6737";
-var buildplot = function(array){
-    var data = [{
-        values: array,    
-        labels: ['movieA', 'MovieB', 'MovieC','MovieD'],
-        type: 'pie'
-        }];
-    console.log(array);
-Plotly.newPlot('pie_chart', data);
+    var buildplot = function(array){
+        console.log(array)
+        var trace1 = {  
+            labels: ['MovieA', 'MovieB', 'MovieC','MovieD'],
+            values: array,  
+            type: 'pie'
+            }
+        var data = [trace1];
+        console.log("data is here",data);
+        Plotly.newPlot('pie_chart', data);
     
-}
+    }
     
     d3.json(queryURL, function (error, response) {
-        console.log("queryURL", response);
+        //console.log("queryURL", response);
         var title_list = [];
         var rev_list = [];
         for (i = 0; i < 4; i++) {
@@ -33,14 +35,15 @@ Plotly.newPlot('pie_chart', data);
 
             for (j=0; j<1; j++){
                 d3.json(queryURL2, function(error, response){
-                    console.log(queryURL2, response);
+                    //console.log(queryURL2, response);
                     var title = response.title;
+                    title_list.push(title);
                     var rev_info = response.revenue;
-                    rev_list.push(rev_info);
+                    rev_list.push(rev_info/1000000);
                     var release_date = response.release_date;
                     var poster_img = response.poster_path;
 
-                    console.log(title);
+                    //console.log(title);
                     
 
                     d3.select("#card1")
@@ -65,15 +68,18 @@ Plotly.newPlot('pie_chart', data);
             };
                 
         };
+        
+        console.log("about to build the plot: ",rev_list);
+        buildplot(rev_list)
 
-            buildplot(rev_list)
 
         });
+
     var queryURL3 = "https://api.themoviedb.org/3/movie/upcoming?api_key=84ef22f5d85f87fb669625c2771b6737";
 
     
     d3.json(queryURL3, function (error, response) {
-        console.log("queryURL3", response);
+        //console.log("queryURL3", response);
         
         for (w = 0; w < 4; w++) {
             var cs_title = response.results[w].title;
